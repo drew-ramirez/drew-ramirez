@@ -1,17 +1,157 @@
-name: Metrics
+name: GitHub Metrics
+
 on:
-  schedule: [{cron: "0 0 * * *"}]
+  schedule:
+    - cron: "15 8 * * *"
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/metrics.yml
+
 jobs:
-  github-metrics:
+  render-metrics:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+
     steps:
-      - uses: lowlighter/metrics@latest
+      - name: Generate engineering metrics
+        uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6
         with:
           token: ${{ secrets.METRICS_TOKEN }}
           user: drew-ramirez
+          filename: github-metrics.svg
+          output_action: none
           template: classic
           base: header, activity, community, repositories, metadata
+
           config_timezone: America/Los_Angeles
+          config_display: large
+          config_padding: 12
+          config_order: base.header, isocalendar, languages, habits, activity
+
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+
+          plugin_languages: yes
+          plugin_languages_sections: most-used, recently-used
+          plugin_languages_details: percentage
+          plugin_languages_limit: 8
+
+          plugin_habits: yes
+          plugin_habits_facts: yes
+          plugin_habits_charts: yes
+          plugin_habits_charts_type: classic
+          plugin_habits_trim: yes
+
+          plugin_activity: yes
+          plugin_activity_limit: 5
+          plugin_activity_days: 0
+          plugin_activity_visibility: public
+          plugin_activity_filter: push, pr, issue, release, review, ref/create
+
+          extras_css: |
+            :root {
+              background-color: #162319;
+              color: #d9cdb6;
+              --color-calendar-graph-day-bg: #28352b;
+              --color-calendar-graph-day-border: #4e5d4c;
+              --color-calendar-graph-day-L1-bg: #a8b68d;
+              --color-calendar-graph-day-L2-bg: #7f9367;
+              --color-calendar-graph-day-L3-bg: #587049;
+              --color-calendar-graph-day-L4-bg: #38533a;
+              --color-calendar-graph-day-L1-border: #a8b68d;
+              --color-calendar-graph-day-L2-border: #7f9367;
+              --color-calendar-graph-day-L3-border: #587049;
+              --color-calendar-graph-day-L4-border: #38533a;
+            }
+
+            h1,
+            h2,
+            h3 {
+              color: #b8ca9d !important;
+            }
+
+            .field svg {
+              fill: #a8916e;
+            }
+
+            small,
+            .h-details,
+            footer,
+            .footnote,
+            .activity .details,
+            .activity .timestamp,
+            .field.language.details small {
+              color: #aa9c83 !important;
+            }
+
+            .activity .repo,
+            .activity .issue,
+            .activity .commit .sha {
+              color: #d1ae72;
+            }
+
+            .activity .code {
+              background-color: #6b513b66;
+              color: #eadfc8;
+            }
+
+            [fill="#ebedf0"] {
+              fill: #28352b !important;
+            }
+
+            [fill="#9be9a8"] {
+              fill: #a8b68d !important;
+            }
+
+            [fill="#40c463"] {
+              fill: #7f9367 !important;
+            }
+
+            [fill="#30a14e"] {
+              fill: #587049 !important;
+            }
+
+            [fill="#216e39"] {
+              fill: #38533a !important;
+            }
+
+      - name: Store generated metrics
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: github-metrics
+          path: /metrics_renders/github-metrics.svg
+          if-no-files-found: error
+          retention-days: 1
+
+  publish-metrics:
+    needs: render-metrics
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out profile repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Download generated metrics
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: github-metrics
+          path: .
+
+      - name: Publish updated metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-metrics.svg
+
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+
+          git commit -m "chore: update GitHub metrics"
+          git push
