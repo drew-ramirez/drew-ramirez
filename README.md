@@ -1,11 +1,19 @@
+<h1 align="center">Drew Ramirez</h1>
+
 <p align="center">
-  <img src="./assets/profile-header.svg" alt="Drew Ramirez — full-stack and systems developer" width="100%">
+  Full-stack and systems developer
 </p>
 
 <p align="center">
-  <a href="https://drewramirez.dev"><img src="https://img.shields.io/badge/Portfolio-drewramirez.dev-3A5A40?style=for-the-badge&amp;logo=leaflet&amp;logoColor=F2E8CF" alt="Portfolio"></a>
-  <a href="https://pickl.lol"><img src="https://img.shields.io/badge/Live_Project-PickL.lol-6B4F3A?style=for-the-badge&amp;logo=riotgames&amp;logoColor=F2E8CF" alt="PickL.lol"></a>
-  <a href="https://www.credly.com/users/andrew-ramirez.380b6374/badges"><img src="https://img.shields.io/badge/AWS_%26_Cloud-Credentials-667A55?style=for-the-badge&amp;logo=amazonwebservices&amp;logoColor=F2E8CF" alt="AWS and cloud credentials"></a>
+  <a href="https://drewramirez.dev">
+    <img src="https://img.shields.io/badge/Portfolio-DREWRAMIREZ.DEV-4F6B57?style=for-the-badge&amp;labelColor=30363D&amp;logo=leaflet&amp;logoColor=FFFFFF" alt="Portfolio">
+  </a>
+  <a href="https://kdx.gg/">
+    <img src="https://img.shields.io/badge/Live_Project-KDX.GG-9C6AFF?style=for-the-badge&amp;labelColor=30363D&amp;logo=riotgames&amp;logoColor=FFFFFF" alt="KDX.GG">
+  </a>
+  <a href="https://www.credly.com/users/andrew-ramirez.38bb6374/badges">
+    <img src="https://img.shields.io/badge/AWS_%26_Cloud-CREDENTIALS-3B4B5F?style=for-the-badge&amp;labelColor=30363D&amp;logo=amazonwebservices&amp;logoColor=FF9900" alt="AWS and cloud credentials">
+  </a>
 </p>
 
 I’m Drew, a full-stack and systems developer who builds web applications, automation systems, data-processing pipelines, and game-related projects.
