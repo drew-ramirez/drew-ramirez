@@ -16,9 +16,7 @@
   </a>
 </p>
 
-I’m Drew, a full-stack and systems developer who builds web applications, automation systems, data-processing pipelines, and game-related projects.
-
-Most of my projects start with something I want to understand better or a process I want to improve. I spend the most time on the logic underneath the interface: how data moves through a system, how state changes, what happens when something fails, and how to keep the code understandable as it grows.
+I’m Drew, a full-stack and systems developer who builds web applications, data-processing pipelines, and often times game-related projects.
 
 Currently exploring AWS and cloud engineering, C++ systems programming, graphics, procedural generation, and simulation.
 
